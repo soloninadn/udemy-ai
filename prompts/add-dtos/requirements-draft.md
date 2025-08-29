@@ -1,0 +1,1 @@
+Update TransactionController to use DTOs. In the package 'models' create a new POJO class 'TransactionDTO' with the same properties as the JPA entity. The DTO should use lombok. Create a MapStruct mapper to convert between the DTO and the JPA entity. Mapper should be in the package 'mappers'. Update the controller to use the DTOs.

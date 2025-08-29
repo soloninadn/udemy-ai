@@ -11,8 +11,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.mapstruct.factory.Mappers;
 import ua.ardas.udemy_ai.entities.Transaction;
 import ua.ardas.udemy_ai.entities.Transaction.Status;
+import ua.ardas.udemy_ai.mappers.TransactionMapper;
+import ua.ardas.udemy_ai.models.TransactionDTO;
 import ua.ardas.udemy_ai.services.TransactionService;
 
 import java.math.BigDecimal;
@@ -34,6 +37,11 @@ class TransactionControllerTest {
         @Bean
         TransactionService transactionService() {
             return Mockito.mock(TransactionService.class);
+        }
+
+        @Bean
+        TransactionMapper transactionMapper() {
+            return Mappers.getMapper(TransactionMapper.class);
         }
     }
 
@@ -102,11 +110,11 @@ class TransactionControllerTest {
     @Test
     @DisplayName("POST /api/transactions creates and returns 201 with Location and body")
     void create_returnsCreated() throws Exception {
-        Transaction request = Transaction.builder()
+        TransactionDTO request = TransactionDTO.builder()
                 .amount(new BigDecimal("50.00"))
                 .currency("EUR")
                 .description("New Transaction")
-                .status(Status.PENDING)
+                .status("PENDING")
                 .build();
 
         Transaction created = Transaction.builder()
